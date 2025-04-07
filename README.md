@@ -25,12 +25,10 @@ DataApp is a full-stack web application built with Flask that allows users to re
 3. **Activate the Virtual Environment:**
   On Windows:
   bash
-  Copy
   .\.venv\Scripts\activate
 
   On macOS/Linux:
   bash
-  Copy
   source .venv/bin/activate
 
 4. **Install Dependencies:**
