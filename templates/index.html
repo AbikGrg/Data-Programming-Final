@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  /* Hero Section Custom Styles */
+  .hero-section {
+    background: linear-gradient(120deg, #4e54c8, #8f94fb);
+    color: #fff;
+    padding: 60px 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+  .hero-section p {
+    font-size: 1.2rem;
+  }
+</style>
+
+<div class="container my-5">
+  <div class="hero-section mb-5">
+    <h1>Welcome to DataApp</h1>
+    <p class="mb-4">Upload and analyze your CSV data easily.</p>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('main.dashboard') }}" class="btn btn-light btn-lg me-2">Go to Dashboard</a>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-light btn-lg">Logout ({{ session.get('username') }})</a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg me-2">Login</a>
+      <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light btn-lg">Register</a>
+    {% endif %}
+  </div>
+
+  <!-- Optionally add an "About" or "Features" section below the hero -->
+  <div class="row align-items-center">
+      {% if not session.get('user_id') %}
+      <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
