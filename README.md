@@ -16,7 +16,7 @@ DataApp is a full-stack web application built with Flask that allows users to re
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/YourUsername/Data-Programming-Final.git
+   git clone https://github.com/AbikGrg/Data-Programming-Final.git
    cd Data-Programming-Final
 
 2. **Create a virtual environment:**
