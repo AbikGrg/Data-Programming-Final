@@ -2,6 +2,7 @@
 from functools import wraps
 from flask import session, redirect, url_for, flash
 
+# Decorator to restrict access to logged-in users only
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

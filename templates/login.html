@@ -14,6 +14,7 @@
   {% endif %}
 {% endwith %}
 
+<!-- Login form that sends username and password to the server -->
 <form method="POST" action="{{ url_for('auth.login') }}">
   <div class="form-group">
     <label>Username</label>

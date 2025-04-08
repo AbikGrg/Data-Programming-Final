@@ -84,6 +84,8 @@
     loadTableData({col1: filterVal});
   });
 
+  // Delete a data entry after confirmation, then refresh the table and chart
+
   function deleteRow(entryId) {
     if (!confirm("Are you sure you want to delete this entry?")) return;
     fetch(`{{ url_for("main.delete_entry", entry_id=0) }}`.replace('0', entryId), {
@@ -96,6 +98,8 @@
       drawChart();
     });
   }
+
+// Prompt the user to update a value, send the update to the server, then refresh the table and chart
 
   function showUpdateModal(entryId, rowData) {
     let newValue = prompt("Enter new value for {{ headers[0] }}:", rowData["{{ headers[0] }}"]);
@@ -121,6 +125,7 @@
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(initializeChart);
 
+  // Load chart data from the server (if not already loaded), then set up and draw the chart
   function initializeChart() {
     if (apiData.length === 0) {
       fetch('{{ url_for("main.get_data", dataset_id=dataset.id) }}')
@@ -136,6 +141,7 @@
     }
   }
 
+  // Fill the X and Y axis dropdowns with column names from the data
   function populateChartDropdowns() {
     if (apiData.length === 0) return;
     let keys = Object.keys(apiData[0]);
@@ -157,6 +163,7 @@
     ySelect.selectedIndex = keys.length > 1 ? 1 : 0;
   }
 
+  // Create and display a column chart using selected X and Y axis data from the dataset
   function drawChart() {
     let xKey = document.getElementById('x-axis').value;
     let yKey = document.getElementById('y-axis').value;
@@ -182,12 +189,14 @@
     drawPieChart();
   }
 
+  // Group data by X-axis values and prepare it for a pie chart based on Y-axis totals
   function drawPieChart() {
   let xKey = document.getElementById('x-axis').value;
   let yKey = document.getElementById('y-axis').value;
   let groupedData = {};
 
-  // Group and sum values by xKey
+  // Group and sum values by xKey, Loop through the data to group and sum Y-axis values by each unique X-axis label
+
   apiData.forEach(item => {
     let label = item[xKey];
     let value = item[yKey];
@@ -211,6 +220,7 @@
     dataArray.push([label, total]);
   }
 
+  // Create and display a donut-style pie chart using the grouped data
   let pieData = google.visualization.arrayToDataTable(dataArray);
   let pieOptions = {
     title: `Distribution by ${xKey}`,

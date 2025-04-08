@@ -22,14 +22,15 @@ class DataSet(db.Model):
     name = db.Column(db.String(100))
     headers = db.Column(db.Text)  # Comma-separated header names
     user = db.relationship('User', backref='datasets')
-    # Configure cascading deletes: when a DataSet is deleted, its DataEntries are also deleted.
+    # Set it up so that when a DataSet is deleted, all its related DataEntries are automatically deleted too.
     entries = db.relationship('DataEntry', backref='dataset', cascade="all, delete", lazy=True)
 
 class DataEntry(db.Model):
     __tablename__ = 'data_entries'
     id = db.Column(db.Integer, primary_key=True)
     dataset_id = db.Column(db.Integer, db.ForeignKey('datasets.id'), nullable=False)
-    # Support up to 10 columns (adjust as needed)
+    
+    # Support up to 10 columns ( adjust as needed )
     col1 = db.Column(db.Text)
     col2 = db.Column(db.Text)
     col3 = db.Column(db.Text)

@@ -5,6 +5,7 @@ from models import User
 
 auth = Blueprint('auth', __name__)
 
+# Handle user registration: create a new account if the username is not taken
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -21,6 +22,7 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('register.html')
 
+# Handle user login: verify credentials and start a session if valid
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -36,6 +38,7 @@ def login():
         return redirect(url_for('auth.login'))
     return render_template('login.html')
 
+# Log the user out by clearing the session and redirect to the homepage
 @auth.route('/logout')
 def logout():
     session.clear()

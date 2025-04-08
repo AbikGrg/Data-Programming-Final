@@ -12,6 +12,8 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
+# Show the dashboard with all datasets belonging to the logged-in user
+
 @main.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -20,6 +22,8 @@ def dashboard():
     user_id = session.get('user_id')
     datasets = DataSet.query.filter_by(user_id=user_id).all()
     return render_template('dashboard.html', datasets=datasets)
+
+# Allow logged-in users to upload a CSV file (handles both GET and POST requests)
 
 @main.route('/upload', methods=['GET', 'POST'])
 def upload_data():
@@ -55,6 +59,8 @@ def upload_data():
         flash("File uploaded successfully.")
         return redirect(url_for('main.view_dataset', dataset_id=dataset.id))
     return render_template('upload.html')
+
+# Route to view a specific dataset (only if the user is logged in and owns the dataset)
 
 @main.route('/dashboard/<int:dataset_id>')
 def view_dataset(dataset_id):
@@ -102,6 +108,8 @@ def get_data(dataset_id):
         'data': data_list
     })
 
+# API route to update a data entry (only allowed for the owner or an admin)
+
 @main.route('/api/data/entry/<int:entry_id>', methods=['PUT'])
 def update_entry(entry_id):
     if 'user_id' not in session:
@@ -120,6 +128,8 @@ def update_entry(entry_id):
     db.session.commit()
     return jsonify({'message': 'Entry updated successfully.'})
 
+# API route to delete a data entry (only allowed for the owner or an admin)
+
 @main.route('/api/data/entry/<int:entry_id>', methods=['DELETE'])
 def delete_entry(entry_id):
     if 'user_id' not in session:
@@ -132,6 +142,8 @@ def delete_entry(entry_id):
     db.session.commit()
     return jsonify({'message': 'Entry deleted successfully.'})
 
+# Route to delete a dataset (only if the user is logged in)
+
 @main.route('/dataset/delete/<int:dataset_id>', methods=['POST'])
 def delete_dataset(dataset_id):
     if 'user_id' not in session:
@@ -140,12 +152,12 @@ def delete_dataset(dataset_id):
 
     dataset = DataSet.query.get_or_404(dataset_id)
 
-    # Ensure user owns the dataset or is an admin
+    # Ensuring user owns the dataset or is an admin
     if dataset.user_id != session.get('user_id') and session.get('role') != 'admin':
         flash("You do not have permission to delete this dataset.")
         return redirect(url_for('main.dashboard'))
 
-    # Delete the dataset (with cascade if configured)
+    # Deletes the dataset and everything linked to it (if it's set up that way).
     db.session.delete(dataset)
     db.session.commit()
 
