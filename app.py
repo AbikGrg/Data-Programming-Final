@@ -4,8 +4,10 @@ from extensions import db
 from auth import auth
 from main import main
 
+# Setting up the Flask app with configuration and initialize the database
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'  # Change in production!
+app.config['SECRET_KEY'] = 'group6'  
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
