@@ -20,19 +20,23 @@ DataApp is a full-stack web application built with Flask that allows users to re
    cd Data-Programming-Final
 
 2. **Create a virtual environment:**
+   ```bash
    python -m venv .venv
    
 3. **Activate the Virtual Environment:**
-  On **Windows**:
-   ```bash
-   .\.venv\Scripts\activate
-
-
-On **macOS/Linux**: source .venv/bin/activate
+     On **Windows**:
+      ```bash
+      .\.venv\Scripts\activate
+ 
+ On **macOS/Linux**: 
+ 
+     source .venv/bin/activate
 
 5. **Install Dependencies:**
-   pip install Flask Flask-SQLAlchemy
+   
+         pip install Flask Flask-SQLAlchemy
 
-6. **Run the Application:**
-  python app.py
+7. **Run the Application:**
+
+         python app.py
  
